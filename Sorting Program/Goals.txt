@@ -1,0 +1,158 @@
+Dear Candidate,
+
+If you are receiving this email then your resume has been shortlisted for Software Developer position with Enterprise Software Engineering team at Oracle India Development Center, Bangalore.
+
+As discussed, your first technical screen over phone is on Monday (17th Feb) @ 3 PM
+
+About Enterprise Software Engineering
+We develop, manage and provide software development services to Oracle Development teams across the globe. 
+Some of the key operations managed by us include Source code management systems, Continuous integration and delivery infrastructure systems, build and release automation. As a part of our team you will be responsible for design, develop, troubleshoot and debug key software for database, applications, tools etc used by development teams within Oracle.
+
+As a part of interview process you are required to finish the following listed tasks.
+ You are required to respond back on or before Feb 7th 2014 with the solutions to these tasks. Attempt as many questions as you can.
+
+All the task below represents problems with more than one right solution. You are expected to make a sincere attempt to solve these problems. Adding test cases to protect your code will be an added advantage.
+
+1. Write a Hudson Publisher Plugin
+
+Please install and use the following:
+a. JDK 1.6
+b. Maven 3.0.5 http://maven.apache.org/download.cgi
+c. Version 3.0.1 or latest of Hudson. http://hudson-ci.org/
+
+Feel free to study this link during the exercise. You will not be able to complete this exercise without access to a network so that maven can download the necessary dependencies.
+
+Goal :
+Create a customer Publisher @Extension
+Add a very simple Descriptor that permits the site administrator to set a property named "PublishURL" the url doesn't have to be used by the plugin.
+Demonstrate that the Publish can be selected by a test Hudson job.
+Upload your plugin code to GitHub and provide a brief description on how the plugin works. 
+
+
+2. Dependency Management
+Write two paragraphs on the difference between the following two expressions of "dependencies". It doesn't matter if you recognized what they are. There is no "right" answer to this one. Just tell us a little about what you see as some interesting differences between the two expressions:
+
+a)
+  /Users/slim/clojure/cagops/lucene/test:/Users/slim/clojure/cagops/lucene/src:/Users/slim/clojure/cagops/lucene/dev7
+  resources:/Users/slim/clojure/cagops/lucene/resources:/Users/slim/clojure/cagops/lucene/target/classes:/Users/slim/
+  .m2/repository/clojure7complete/clojure7complete/0.2.3/clojure7complete70.2.3.jar:/Users/slim/.m2/repository/org/cl
+  ojure/tools.nrepl/0.2.3/tools.nrepl70.2.3.jar:/Users/slim/.m2/repository/jakarta7regexp/jakarta7regexp/1.4/jakarta7
+  regexp71.4.jar:/Users/slim/.m2/repository/org/apache/lucene/lucene7sandbox/4.3.1/lucene7sandbox74.3.1.jar:/Users/sl
+  im/.m2/repository/org/apache/lucene/lucene7queries/4.3.1/lucene7queries74.3.1.jar:/Users/slim/.m2/repository/org/ap
+  ache/lucene/lucene7queryparser/4.3.1/lucene7queryparser74.3.1.jar:/Users/slim/.m2/repository/org/apache/lucene/luce
+  ne7analyzers7common/4.3.1/lucene7analyzers7common74.3.1.jar:/Users/slim/.m2/repository/org/apache/lucene/lucene7cor
+  e/4.3.1/lucene7core74.3.1.jar:/Users/slim/.m2/repository/org/clojure/clojure/1.5.1/clojure71.5.1.jar
+
+b)
+:dependencies [
+                [org.clojure/clojure                       "1.5.1"]
+                [org.apache.lucene/lucene7core             "4.3.1"]
+                [org.apache.lucene/lucene7analyzers7common "4.3.1"]
+                [org.apache.lucene/lucene7queryparser      "4.3.1"]
+              ]
+
+
+3. Create a web application of books with the db of your choice and expose a JSON REST API.
+
+The REST API routes should be as follow
+
+GET    /books     =>    Returns a list of books
+POST   /books     =>    Creates a new book
+GET    /books/:id =>    Returns a book with specified id
+PATCH  /books/:id =>    Edits the book with specified id
+DELETE /books/:id =>    Deletes the book with the specified id
+
+
+GET    /authors     =>    Returns a list of authors
+POST   /authors     =>    Creates a new author
+GET    /authors/:id =>    Returns an author with specified id
+PATCH  /authors/:id =>    Edits an author with specified id
+DELETE /authors/:id =>    Deletes the author with the specified id
+
+
+GET    /category     =>    Returns a list of categories
+POST   /category     =>    Creates a new category
+GET    /category/:id =>    Returns a category with specified id
+PATCH  /category/:id =>    Edits a category with specified id
+DELETE /category/:id =>    Deletes the category with the specified id
+
+
+Entities have the following properties:
+Books
+id: numeric
+title: string
+category: relationship
+author: relationship
+
+Author
+id: numeric
+name: string
+lastname: string
+birthday: date
+
+Category
+id: numeric
+name: string
+
+
+Implement the 15 routes
+When creating a book with a non existing category or author create this resources as well.
+Create a route (or use an existing one with query parameters) to find all books of a certain category
+Create a route (or use an existing one with query parameters) to find all books of a certain author
+The list of books only includes the book's id and title, but a single book resource should load the category and author resource
+GET    /books
+[ {id: 1, title: "Robin Hood"}, {id: 2, "Moby-Dick"}]
+GET    /books/1
+{id: 2, title: "Moby-Dick", category: {id: 1, name: "Adventure"}, author: {id:3, name: "Herman Melville"}}
+Order the list of authors by name
+Create an interface that consumes this REST API and can Create Read Update and Delete (CRUD) this resources.
+A book can have 1 or more authors, an author can have 1 or more books.
+Upload your plugin code to GitHub and provide a brief description
+
+
+4. Write a program to sort a input text file. You can use any programming language you would like. 
+
+Goals :
+The program should not use more than 500MB of memory.
+Your program will be benchmarked against a sample file with 10 million lines and approx 1GB file size.
+
+To generate the sample data file use the following perl script.
+======================================================
+#!/usr/bin/perl
+
+use English;
+use strict;
+
+my @chars=('a'..'z','A'..'Z','0'..'9','_',' ');
+my ($lines) = $ARGV[0];
+
+foreach (1..$lines) {
+  print randomString(int(rand(120 - 80)) + 80) . "\n";
+}
+exit;
+
+sub randomString() {
+  my $length = shift;
+  my $randomString;
+  foreach (1..$length) {
+     $randomString = $randomString . $chars[int(rand @chars)];
+  }
+  return $randomString;
+}
+======================================================
+
+Save the above code as generate_data.pl and use the following syntax
+
+perl generate_data.pl <number_of_line>
+
+To generate a sample data file with 100 lines use the following command
+perl generate_data.pl 100 > sample.dat
+
+To generate a sample data file with 10million lines use the following command
+perl generate_data.pl 10000000 > sample.dat
+
+How to submit your solutions 
+Please use GitHub : https://github.com/ to submit your code changes.
+Send us the link to your projects once you have uploaded your code to GitHub Repository.
+Please do not reply back with attachments of your code.
+You will be required to explain your code if you clear this round.
